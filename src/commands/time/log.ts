@@ -1,12 +1,10 @@
-import {Command, flags} from '@oclif/command'
+import {GraphQLCommand} from './graphql-command'
+import {flags} from '@oclif/command'
 import {cli} from 'cli-ux'
 import axios from 'axios'
 import * as inquirer from 'inquirer'
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 
-require('dotenv').config()
-
-export class LogCommand extends Command {
+export class LogCommand extends GraphQLCommand {
   static description = 'Logs time'
 
   static flags = {
@@ -14,19 +12,6 @@ export class LogCommand extends Command {
     task: flags.string({char: 't', description: 'Task'}),
     duration: flags.string({char: 'm', description: 'Duration in minutes'}),
     description: flags.string({char: 'd', description: 'Description'})
-  }
-
-  private axiosParams = {
-    url: process.env.BS_API_URL,
-    method: 'post',
-    headers: {
-      'Authorization': 'Bearer ' + process.env.BS_AUTH_TOKEN
-    },
-  }
-
-  private getAccountUserId() {
-    let decoded = jwtDecode<JwtPayload>(process.env.BS_AUTH_TOKEN);
-    return decoded['https://hasura.io/jwt/claims']['x-hasura-account-user-id'];
   }
 
   private getProjectUserId(projectId:string, accountUserId:string) {
