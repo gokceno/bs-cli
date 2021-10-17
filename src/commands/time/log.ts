@@ -16,6 +16,14 @@ export class LogCommand extends Command {
     description: flags.string({char: 'd', description: 'Description'})
   }
 
+  private axiosParams = {
+    url: process.env.BS_API_URL,
+    method: 'post',
+    headers: {
+      'Authorization': 'Bearer ' + process.env.BS_AUTH_TOKEN
+    },
+  }
+
   private getAccountUserId() {
     let decoded = jwtDecode<JwtPayload>(process.env.BS_AUTH_TOKEN);
     return decoded['https://hasura.io/jwt/claims']['x-hasura-account-user-id'];
@@ -23,11 +31,7 @@ export class LogCommand extends Command {
 
   private getProjectUserId(projectId:string, accountUserId:string) {
     return axios({
-      url: process.env.BS_API_URL,
-      method: 'post',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.BS_AUTH_TOKEN
-      },
+      ...this.axiosParams,
       data: {
         query: `
           query ProjectUsersQuery($accountUserId:uuid, $projectId:uuid) {
@@ -44,14 +48,6 @@ export class LogCommand extends Command {
     }).then(response => {
       return response.data.data.projects_users[0].id
     })
-  }
-
-  private axiosParams = {
-    url: process.env.BS_API_URL,
-    method: 'post',
-    headers: {
-      'Authorization': 'Bearer ' + process.env.BS_AUTH_TOKEN
-    },
   }
 
   async run() {
