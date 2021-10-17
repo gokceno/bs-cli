@@ -1,12 +1,12 @@
 {
-  "name": ",bs-cli",
+  "name": "bs-cli",
   "description": "BeforeSunset time tracker CLI",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Gokcen Ogutcu @gokceno",
   "bin": {
     "bs": "./bin/run"
   },
-  "bugs": "https://github.com/gokceno/,bs-cli/issues",
+  "bugs": "https://github.com/gokceno/bs-cli/issues",
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@types/node": "^10.17.60",
@@ -26,7 +26,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/gokceno/,bs-cli",
+  "homepage": "https://github.com/gokceno/bs-cli",
   "keywords": [
     "oclif"
   ],
@@ -39,7 +39,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "gokceno/,bs-cli",
+  "repository": "gokceno/bs-cli",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
