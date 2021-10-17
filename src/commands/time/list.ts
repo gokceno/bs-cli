@@ -41,19 +41,24 @@ export class ListCommand extends GraphQLCommand {
       }
     })
 
-    cli.table(projects.data.projects_users_times, {
-      'Project Name': {
-        minWidth: '30',
-        get: row => row.projectsTask.project.projectName
-      },
-      'Task': {
-        minWidth: '30',
-        get: row => row.projectsTask.accountsTask.taskTitle
-      },
-      'Duration': {
-        minWidth: '10',
-        get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60}`
-      }
-    })
+    if(projects.data.projects_users_times.length) {
+      cli.table(projects.data.projects_users_times, {
+        'Project Name': {
+          minWidth: '30',
+          get: row => row.projectsTask.project.projectName
+        },
+        'Task': {
+          minWidth: '30',
+          get: row => row.projectsTask.accountsTask.taskTitle
+        },
+        'Duration': {
+          minWidth: '10',
+          get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60}`
+        }
+      })
+    }
+    else {
+      this.log('No entries so far.')
+    }
   }
 }
