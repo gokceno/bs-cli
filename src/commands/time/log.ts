@@ -46,7 +46,12 @@ export class LogCommand extends Command {
         }
       }
     }).then(response => {
-      return response.data.data.projects_users[0].id
+      if(!response.data.errors) {
+        return response.data.data.projects_users[0].id
+      }
+      else {
+        throw new Error(response.data.errors[0].message);
+      }
     })
   }
 
@@ -90,12 +95,17 @@ export class LogCommand extends Command {
               }
             }
           }).then(response => {
-            return response.data.data.accounts_users[0].account.projects.map(row => {
-              return {
-                name: `${row.projectName} (${row.accountsClient.clientName})`, 
-                value: row.id
-              }
-            })
+            if(!response.data.errors) {
+              return response.data.data.accounts_users[0].account.projects.map(row => {
+                return {
+                  name: `${row.projectName} (${row.accountsClient.clientName})`, 
+                  value: row.id
+                }
+              })
+            }
+            else {
+              throw new Error(response.data.errors[0].message);
+            }
           })
         }
       }])
@@ -129,9 +139,14 @@ export class LogCommand extends Command {
     
             }
           }).then(response => {
-            return response.data.data.projects[0].projectsTasks.map(row => {
-              return {name: row.accountsTask.taskTitle, value: row.id}
-            })
+            if(!response.data.errors) {
+              return response.data.data.projects[0].projectsTasks.map(row => {
+                return {name: row.accountsTask.taskTitle, value: row.id}
+              })
+            }
+            else {
+              throw new Error(response.data.errors[0].message);
+            }
           })
         }
       }])
@@ -145,38 +160,42 @@ export class LogCommand extends Command {
     if(!description) {
       description = await cli.prompt('Type description')
     }
-
-    axios({
-      ...this.axiosParams,
-      data: {
-        query: `
-        mutation MyMutation($duration:float8, $notes:String, $onDate:timestamptz, $projectTaskId:uuid, $projectUserId:uuid) {
-          insert_projects_users_times(objects: {
-            duration: $duration, 
-            notes: $notes, 
-            onDate: $onDate, 
-            projectTaskId: $projectTaskId, 
-            projectUserId: $projectUserId
-          }) {
-            affected_rows
+    if(!isNaN(+duration)) {
+      axios({
+        ...this.axiosParams,
+        data: {
+          query: `
+          mutation MyMutation($duration:float8, $notes:String, $onDate:timestamptz, $projectTaskId:uuid, $projectUserId:uuid) {
+            insert_projects_users_times(objects: {
+              duration: $duration, 
+              notes: $notes, 
+              onDate: $onDate, 
+              projectTaskId: $projectTaskId, 
+              projectUserId: $projectUserId
+            }) {
+              affected_rows
+            }
+          }
+          `,
+          variables: {
+            duration: duration,
+            notes: description,
+            onDate: dayjs().format(),
+            projectTaskId: task,
+            projectUserId: await this.getProjectUserId(project, this.getAccountUserId())
           }
         }
-        `,
-        variables: {
-          duration: duration,
-          notes: description,
-          onDate: dayjs().format(),
-          projectTaskId: task,
-          projectUserId: await this.getProjectUserId(project, this.getAccountUserId())
+      }).then(response => {
+        if(!response.data.errors) {
+          this.log(`You have logged ${(duration-(duration%60))/60} hour(s) and ${duration%60} minute(s)`)
         }
-      }
-    }).then(response => {
-      if(!response.data.errors) {
-        this.log(`You have logged ${(duration-(duration%60))/60} hour(s) and ${duration%60} minute(s)`)
-      }
-      else {
-        this.log(response.data.errors)
-      }
-    })
+        else {
+          throw new Error(response.data.errors[0].message);
+        }
+      })
+    }
+    else {
+      throw new Error('Please enter duration in minutes, only numeric values are accepted.');
+    }
   }
 }
