@@ -19,7 +19,7 @@ $ npm install -g bs-cli
 $ bs COMMAND
 running command...
 $ bs (-v|--version|version)
-bs-cli/0.0.2 darwin-arm64 node-v16.4.0
+bs-cli/0.1.0 darwin-arm64 node-v16.4.0
 $ bs --help [COMMAND]
 USAGE
   $ bs COMMAND
@@ -30,6 +30,7 @@ USAGE
 <!-- commands -->
 * [`bs help [COMMAND]`](#bs-help-command)
 * [`bs projects:list`](#bs-projectslist)
+* [`bs time:list`](#bs-timelist)
 * [`bs time:log`](#bs-timelog)
 
 ## `bs help [COMMAND]`
@@ -61,7 +62,18 @@ OPTIONS
   -c, --client=client  Client id
 ```
 
-_See code: [src/commands/projects/list.ts](https://github.com/gokceno/bs-cli/blob/v0.0.2/src/commands/projects/list.ts)_
+_See code: [src/commands/projects/list.ts](https://github.com/gokceno/bs-cli/blob/v0.1.0/src/commands/projects/list.ts)_
+
+## `bs time:list`
+
+Logs time
+
+```
+USAGE
+  $ bs time:list
+```
+
+_See code: [src/commands/time/list.ts](https://github.com/gokceno/bs-cli/blob/v0.1.0/src/commands/time/list.ts)_
 
 ## `bs time:log`
 
@@ -78,5 +90,5 @@ OPTIONS
   -t, --task=task                Task
 ```
 
-_See code: [src/commands/time/log.ts](https://github.com/gokceno/bs-cli/blob/v0.0.2/src/commands/time/log.ts)_
+_See code: [src/commands/time/log.ts](https://github.com/gokceno/bs-cli/blob/v0.1.0/src/commands/time/log.ts)_
 <!-- commandsstop -->
