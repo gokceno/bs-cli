@@ -13,6 +13,7 @@ export class ListCommand extends GraphQLCommand {
     
     const {flags} = this.parse(ListCommand)
     
+    // TODO: JWT hata verirse error handle edilmiyor.
     const {data: projects} = await axios({
       ...this.axiosParams,
       data: {
@@ -53,7 +54,7 @@ export class ListCommand extends GraphQLCommand {
         },
         'Duration': {
           minWidth: '10',
-          get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60}`
+          get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60 < 10 ? '0' + row.duration%60 : row.duration%60}`
         }
       })
     }
