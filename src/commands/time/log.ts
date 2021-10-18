@@ -149,6 +149,7 @@ export class LogCommand extends GraphQLCommand {
       axios({
         ...this.axiosParams,
         data: {
+          // TODO: Mutation should be named in a more meaningful way
           query: `
           mutation MyMutation($duration:float8, $notes:String, $onDate:timestamptz, $projectTaskId:uuid, $projectUserId:uuid) {
             insert_projects_users_times(objects: {

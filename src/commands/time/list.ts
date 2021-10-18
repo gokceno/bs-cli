@@ -3,6 +3,7 @@ import {flags} from '@oclif/command'
 import {cli} from 'cli-ux'
 import axios from 'axios'
 import * as inquirer from 'inquirer'
+import {USERS_TIMES} from '../../queries'
 
 export class ListCommand extends GraphQLCommand {
   static description = 'Logs time'
@@ -17,27 +18,11 @@ export class ListCommand extends GraphQLCommand {
     const {data: projects} = await axios({
       ...this.axiosParams,
       data: {
-        query: `
-        query Times($startedAt: timestamptz!, $endedAt: timestamptz!, $accountUserId: uuid) {
-          projects_users_times(where: {onDate: {_gte: $startedAt, _lt: $endedAt}, projectsUser: {accountsUser: {id: {_eq: $accountUserId}}}}, order_by: {createdAt: asc}) {
-            onDate
-            duration
-            notes
-            projectsTask {
-              accountsTask {
-                taskTitle
-              }
-              project {
-                projectName
-              }
-            }
-          }
-        }
-        `,
+        query: USERS_TIMES,
         variables: {
-          "startedAt": dayjs().format('YYYY-MM-DD[T00:00:00Z]'),
-          "endedAt": dayjs().format('YYYY-MM-DD[T23:59:59Z]'),
-          "accountUserId": this.getAccountUserId()
+          startedAt: dayjs().format('YYYY-MM-DD[T00:00:00Z]'),
+          endedAt: dayjs().format('YYYY-MM-DD[T23:59:59Z]'),
+          accountUserId: this.getAccountUserId()
         }
       }
     })
@@ -54,7 +39,7 @@ export class ListCommand extends GraphQLCommand {
         },
         'Duration': {
           minWidth: '10',
-          get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60 < 10 ? '0' + row.duration%60 : row.duration%60}`
+          get: row => `${(row.duration-(row.duration%60))/60}:${row.duration%60<10?'0'+row.duration%60:row.duration%60}`
         }
       })
     }
