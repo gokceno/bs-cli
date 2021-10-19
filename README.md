@@ -19,7 +19,7 @@ $ npm install -g bs-cli
 $ bs COMMAND
 running command...
 $ bs (-v|--version|version)
-bs-cli/0.2.0 darwin-arm64 node-v16.4.0
+bs-cli/0.2.1 darwin-arm64 node-v16.4.0
 $ bs --help [COMMAND]
 USAGE
   $ bs COMMAND
@@ -64,7 +64,7 @@ OPTIONS
   -c, --client=client  Client id
 ```
 
-_See code: [src/commands/projects/list.ts](https://github.com/gokceno/bs-cli/blob/v0.2.0/src/commands/projects/list.ts)_
+_See code: [src/commands/projects/list.ts](https://github.com/gokceno/bs-cli/blob/v0.2.1/src/commands/projects/list.ts)_
 
 ## `bs time:graphql-command`
 
@@ -73,7 +73,7 @@ USAGE
   $ bs time:graphql-command
 ```
 
-_See code: [src/commands/time/graphql-command.ts](https://github.com/gokceno/bs-cli/blob/v0.2.0/src/commands/time/graphql-command.ts)_
+_See code: [src/commands/time/graphql-command.ts](https://github.com/gokceno/bs-cli/blob/v0.2.1/src/commands/time/graphql-command.ts)_
 
 ## `bs time:list`
 
@@ -84,7 +84,7 @@ USAGE
   $ bs time:list
 ```
 
-_See code: [src/commands/time/list.ts](https://github.com/gokceno/bs-cli/blob/v0.2.0/src/commands/time/list.ts)_
+_See code: [src/commands/time/list.ts](https://github.com/gokceno/bs-cli/blob/v0.2.1/src/commands/time/list.ts)_
 
 ## `bs time:log`
 
@@ -101,7 +101,7 @@ OPTIONS
   -t, --task=task                Task
 ```
 
-_See code: [src/commands/time/log.ts](https://github.com/gokceno/bs-cli/blob/v0.2.0/src/commands/time/log.ts)_
+_See code: [src/commands/time/log.ts](https://github.com/gokceno/bs-cli/blob/v0.2.1/src/commands/time/log.ts)_
 
 ## `bs time:remove`
 
@@ -115,5 +115,5 @@ OPTIONS
   -t, --projectUserTimeId=projectUserTimeId  Time Entry
 ```
 
-_See code: [src/commands/time/remove.ts](https://github.com/gokceno/bs-cli/blob/v0.2.0/src/commands/time/remove.ts)_
+_See code: [src/commands/time/remove.ts](https://github.com/gokceno/bs-cli/blob/v0.2.1/src/commands/time/remove.ts)_
 <!-- commandsstop -->
